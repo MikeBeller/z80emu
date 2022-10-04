@@ -705,7 +705,7 @@ Cpu.prototype.execute = function(i) {
               t2     = ((this.f & CARRY) || (this.a & 0xf0) > 0x90) ? 0x60 : 0;
               this.a = this.calcFlags(this.a+t2, this.a, t2);
               this.cycles += 4; break;
-  case 0x028: t1=this.r1s(); t2=11; if (this.zf()) { this.pc=(this.pc+t1)&0xFFFF; t2=16; } this.cycles+=t2; break; // z80 JR Z,d
+  case 0x028: t1=this.next1s(); t2=11; if (this.zf()) { this.pc=(this.pc+t1)&0xFFFF; t2=16; } this.cycles+=t2; break; // z80 JR Z,d
   case 0x029: this.HL(this.add2(this.hl(),this.hl())); this.cycles += 11; break; // ADD HL,HL
   case 0x02A: this.HL(this.r2(this.next2())); this.cycles += 16; break; // LD HL,(nn)
   case 0x02B: this.HL((this.hl()-1)&0xFFFF); this.cycles += 6; break; // DEC HL
@@ -722,7 +722,7 @@ Cpu.prototype.execute = function(i) {
   case 0x035: t1=this.hl(); this.w1(t1,this.dec1(this.r1(t1))); this.cycles += 10; break; // DEC (HL)
   case 0x036: this.w1(this.hl(),this.next1()); this.cycles += 10; break; // LD (HL),n
   case 0x037: this.f |= CARRY; this.cycles += 4; break; // SCF
-  case 0x038: t1=this.r1s(); t2=11; if (this.cf()) { this.pc=(this.pc+t1)&0xFFFF; t2=16; } this.cycles+=t2; break; // z80 JR C,d
+  case 0x038: t1=this.next1s(); t2=11; if (this.cf()) { this.pc=(this.pc+t1)&0xFFFF; t2=16; } this.cycles+=t2; break; // z80 JR C,d
   case 0x039: this.HL(this.add2(this.hl(),this.sp)); this.cycles += 11; break; // ADD HL,SP
   case 0x03A: this.a=this.r1(this.next2()); this.cycles += 13; break; // LD A,(nn)
   case 0x03B: this.sp=(this.sp-1)&0xFFFF; this.cycles += 6; break; // DEC SP
